@@ -23,8 +23,8 @@ public class Modelo {
 	private Turismos turismos;
 
 	public Modelo() {
-
-	}
+   // esta vacio porque tu enunciado lo pedía asi, y el plugin me lo daba como azul.
+ }
 
 	public void comenzar() {
 
