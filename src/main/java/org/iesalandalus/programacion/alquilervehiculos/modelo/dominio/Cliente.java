@@ -2,6 +2,7 @@
 // Por Joaquin Francisco Sánchez Capel
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -13,10 +14,10 @@ public class Cliente {
 	private String dni;
 	private String telefono;
 
-	public Cliente(String Nombre, String DNI, String Telefono) {
-		setNombre(Nombre);
-		setDni(DNI);
-		setTelefono(Telefono);
+	public Cliente(String nombre, String dni, String telefono) {
+		setNombre(nombre);
+		setDni(dni);
+		setTelefono(telefono);
 	}
 
 	public Cliente(Cliente cliente) {
@@ -27,6 +28,16 @@ public class Cliente {
 		setDni(cliente.getDni());
 		setTelefono(cliente.getTelefono());
 	}
+	
+	public static Cliente getClienteConDni(String dni) {
+
+		if (dni == null)
+			throw new NullPointerException("ERROR: El DNI no puede ser nulo.");
+
+		Cliente clienteFicticio = new Cliente("Bob Esponja", dni, "950112233");
+		clienteFicticio.setDni(dni);
+		return clienteFicticio;
+	}
 
 	public String getNombre() {
 		return nombre;
@@ -36,7 +47,7 @@ public class Cliente {
 		if (nombre == null) {
 			throw new NullPointerException("ERROR: El nombre no puede ser nulo.");
 		}
-		if (!Pattern.matches(ER_NOMBRE,nombre)) {
+		if (!Pattern.matches(ER_NOMBRE, nombre)) {
 			throw new IllegalArgumentException("ERROR: El nombre no tiene un formato válido.");
 		}
 		this.nombre = nombre;
@@ -50,10 +61,10 @@ public class Cliente {
 		if (dni == null) {
 			throw new NullPointerException("ERROR: El DNI no puede ser nulo.");
 		}
-		if (!Pattern.matches(ER_DNI,dni)) {
+		if (!Pattern.matches(ER_DNI, dni)) {
 			throw new IllegalArgumentException("ERROR: El DNI no tiene un formato válido.");
 		}
-		if(!comprobarLetraDni(dni)) {
+		if (!comprobarLetraDni(dni)) {
 			throw new IllegalArgumentException("ERROR: La letra del DNI no es correcta.");
 		}
 		this.dni = dni;
@@ -61,104 +72,36 @@ public class Cliente {
 
 	private boolean comprobarLetraDni(String dni) {
 		Integer valorDNI = Integer.parseInt(dni.substring(0, dni.length() - 1));
-		Character dniLetra = dni.charAt(dni.length()-1);
+		Character dniLetra = dni.charAt(dni.length() - 1);
 		boolean salida = false;
-		switch (valorDNI % 23) {
-		case 0:
-			if (dniLetra == 'T')
-				salida = true;
-			break;
-		case 1:
-			if (dniLetra == 'R')
-				salida = true;
-			break;
-		case 2:
-			if (dniLetra == 'W')
-				salida = true;
-			break;
-		case 3:
-			if (dniLetra == 'A')
-				salida = true;
-			break;
-		case 4:
-			if (dniLetra == 'G')
-				salida = true;
-			break;
-		case 5:
-			if (dniLetra == 'M')
-				salida = true;
-			break;
-		case 6:
-			if (dniLetra == 'Y')
-				salida = true;
-			break;
-		case 7:
-			if (dniLetra == 'F')
-				salida = true;
-			break;
-		case 8:
-			if (dniLetra == 'P')
-				salida = true;
-			break;
-		case 9:
-			if (dniLetra == 'D')
-				salida = true;
-			break;
-		case 10:
-			if (dniLetra == 'X')
-				salida = true;
-			break;
-		case 11:
-			if (dniLetra == 'B')
-				salida = true;
-			break;
-		case 12:
-			if (dniLetra == 'N')
-				salida = true;
-			break;
-		case 13:
-			if (dniLetra == 'J')
-				salida = true;
-			break;
-		case 14:
-			if (dniLetra == 'Z')
-				salida = true;
-			break;
-		case 15:
-			if (dniLetra == 'S')
-				salida = true;
-			break;
-		case 16:
-			if (dniLetra == 'Q')
-				salida = true;
-			break;
-		case 17:
-			if (dniLetra == 'V')
-				salida = true;
-			break;
-		case 18:
-			if (dniLetra == 'H')
-				salida = true;
-			break;
-		case 19:
-			if (dniLetra == 'L')
-				salida = true;
-			break;
-		case 20:
-			if (dniLetra == 'C')
-				salida = true;
-			break;
-		case 21:
-			if (dniLetra == 'K')
-				salida = true;
-			break;
-		case 22:
-			if (dniLetra == 'E')
-				salida = true;
-			break;
-		default:
-			salida = false;
-		}
+		ArrayList <Character> letras = new ArrayList<>();
+	        letras.add('T');
+	        letras.add('R');
+	        letras.add('W');
+	        letras.add('A');
+	        letras.add('G');
+	        letras.add('M');
+	        letras.add('Y');
+	        letras.add('F');
+	        letras.add('P');
+	        letras.add('D');
+	        letras.add('X');
+	        letras.add('B');
+	        letras.add('N');
+	        letras.add('J');
+	        letras.add('Z');
+	        letras.add('S');
+	        letras.add('Q');
+	        letras.add('V');
+	        letras.add('H');
+	        letras.add('L');
+	        letras.add('C');
+	        letras.add('K');
+	        letras.add('E');
+	        
+	        for (Character caracter:letras)
+	        	if(Objects.equals(caracter, dniLetra)  && (Character.getNumericValue(caracter)==valorDNI%23))
+	        			salida = true;
 		return salida;
 	}
 
@@ -170,20 +113,10 @@ public class Cliente {
 		if (telefono == null) {
 			throw new NullPointerException("ERROR: El teléfono no puede ser nulo.");
 		}
-		if (!Pattern.matches(ER_TELEFONO,telefono)) {
+		if (!Pattern.matches(ER_TELEFONO, telefono)) {
 			throw new IllegalArgumentException("ERROR: El teléfono no tiene un formato válido.");
 		}
 		this.telefono = telefono;
-	}
-
-	public static Cliente getClienteConDni(String dni) {
-		
-		if(dni==null)
-			throw new NullPointerException("ERROR: El DNI no puede ser nulo.");
-		
-		Cliente clienteFicticio = new Cliente("Bob Esponja", dni,"950112233");
-		clienteFicticio.setDni(dni);
-		return clienteFicticio;
 	}
 
 	@Override
@@ -200,8 +133,8 @@ public class Cliente {
 		if (getClass() != obj.getClass())
 			return false;
 		Cliente other = (Cliente) obj;
-		return this.getDni()==other.getDni() && this.getNombre()==other.getNombre()
-				&& this.getTelefono()==other.getTelefono();
+		return this.getDni() == other.getDni() && this.getNombre() == other.getNombre()
+				&& this.getTelefono() == other.getTelefono();
 	}
 
 	@Override

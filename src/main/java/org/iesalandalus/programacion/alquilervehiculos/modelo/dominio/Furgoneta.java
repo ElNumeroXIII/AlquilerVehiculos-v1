@@ -5,8 +5,8 @@ public class Furgoneta extends Vehiculo {
 	private final int FACTOR_PLAZAS = 1;
 	private int pma;
 	private int plazas;
-	
-	public Furgoneta(String marca, String modelo, int pma,int plazas, String matricula) {
+
+	public Furgoneta(String marca, String modelo, int pma, int plazas, String matricula) {
 		super(matricula, modelo, marca);
 		setPma(pma);
 		setPlazas(plazas);
@@ -38,11 +38,12 @@ public class Furgoneta extends Vehiculo {
 
 	@Override
 	int getFactorPrecio() {
-		return getPma()/(FACTOR_PMA + (getPlazas()*FACTOR_PLAZAS));
+		return getPma() / (FACTOR_PMA + (getPlazas() * FACTOR_PLAZAS));
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format( "%s,%s,%d,%d,%s", this.getMarca(),this.getModelo(),this.getPma(),getPlazas(),this.getMatricula());
+		return String.format("%s,%s,%d,%d,%s", this.getMarca(), this.getModelo(), this.getPma(), getPlazas(),
+				this.getMatricula());
 	}
 }
