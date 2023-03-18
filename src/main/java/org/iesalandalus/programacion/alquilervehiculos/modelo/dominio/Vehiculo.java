@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 public abstract class Vehiculo {
 
-	private static final String ER_MARCA = "[A-Za-z0-9]+";
+	private static final String ER_MARCA = "[A-Z][a-z]+([',. -]?[A-Z][a-z]+)*|[A-Z]+";
 	private static final String ER_MATRICULA = "\\d{4}[BCDFGHJKLMNPRSTVWXYZ]{3}";
 	private String marca;
 	private String modelo;
@@ -18,9 +18,12 @@ public abstract class Vehiculo {
 	}
 
 	protected Vehiculo(Vehiculo vehiculo) {
+		if(vehiculo == null)
+			throw new NullPointerException("ERROR: No es posible copiar un vehículo nulo.");
 		setMarca(vehiculo.getMarca());
+		setModelo(vehiculo.getModelo());
 		setMatricula(vehiculo.getMatricula());
-		setModelo(vehiculo.getMarca());
+		
 	}
 
 	public static Vehiculo copiar(Vehiculo vehiculo) {
@@ -87,7 +90,7 @@ public abstract class Vehiculo {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(marca, matricula, modelo);
+		return Objects.hash( matricula);
 	}
 
 	@Override

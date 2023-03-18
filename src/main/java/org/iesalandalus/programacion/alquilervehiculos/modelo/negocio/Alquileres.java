@@ -37,7 +37,7 @@ public class Alquileres {
 	public List<Alquiler> get(Vehiculo turismo) {
 		List<Alquiler> alquilerTurismo = new ArrayList<>();
 		for (Alquiler alquiler : coleccionAlquileres) {
-			if (alquiler.getTurismo().equals(turismo)) {
+			if (alquiler.getVehiculo().equals(turismo)) {
 				alquilerTurismo.add(alquiler);
 			}
 		}
@@ -52,7 +52,7 @@ public class Alquileres {
 		if (alquiler == null) {
 			throw new NullPointerException("ERROR: No se puede insertar un alquiler nulo.");
 		}
-		comprobarAlquiler(alquiler.getCliente(), alquiler.getTurismo(), alquiler.getFechaAlquiler());
+		comprobarAlquiler(alquiler.getCliente(), alquiler.getVehiculo(), alquiler.getFechaAlquiler());
 		coleccionAlquileres.add(alquiler);
 	}
 
@@ -84,15 +84,7 @@ public class Alquileres {
 
     }
 
-	public void devolver(Alquiler alquiler, LocalDate fechaDevolucion) throws OperationNotSupportedException {
-		if (alquiler == null) {
-			throw new NullPointerException("ERROR: No se puede devolver un alquiler nulo.");
-		}
-		if (!coleccionAlquileres.contains(alquiler)) {
-			throw new OperationNotSupportedException("ERROR: No existe ningún alquiler igual.");
-		}
-		alquiler.devolver(fechaDevolucion);
-	}
+
 
 	public void borrar(Alquiler alquiler) throws OperationNotSupportedException {
 		if (alquiler == null) {

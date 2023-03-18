@@ -3,11 +3,13 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 public class Autobus extends Vehiculo {
-	private final int FACTOR_PLAZAS = 2;
+	private static final int FACTOR_PLAZAS = 2;
 	private int plazas;
 
 	public Autobus(String marca, String modelo, int plazas, String matricula) {
-		super(matricula, modelo, marca);
+		super(marca, modelo, matricula);
+		if (plazas < 7 || plazas > 100)
+			throw new IllegalArgumentException("ERROR: Las plazas no son correctas.");
 		setPlazas(plazas);
 	}
 
@@ -33,7 +35,8 @@ public class Autobus extends Vehiculo {
 
 	@Override
 	public String toString() {
-		return String.format("%s,%s,%d,%s", this.getMarca(), this.getModelo(), this.getPlazas(), this.getMatricula());
+		return String.format("%s %s (%d plazas) - %s", this.getMarca(), this.getModelo(), this.getPlazas(),
+				this.getMatricula());
 	}
 
 }

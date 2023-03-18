@@ -7,8 +7,13 @@ public class Furgoneta extends Vehiculo {
 	private int plazas;
 
 	public Furgoneta(String marca, String modelo, int pma, int plazas, String matricula) {
-		super(matricula, modelo, marca);
+		super(marca,modelo,matricula);
+		if(pma<1000||pma>10000 )
+			throw new IllegalArgumentException("ERROR: El PMA no es correcto.");
 		setPma(pma);
+		if(plazas<2||plazas>9 )
+			throw new IllegalArgumentException("ERROR: Las plazas no son correctas.");
+		
 		setPlazas(plazas);
 	}
 
@@ -38,12 +43,12 @@ public class Furgoneta extends Vehiculo {
 
 	@Override
 	int getFactorPrecio() {
-		return getPma() / (FACTOR_PMA + (getPlazas() * FACTOR_PLAZAS));
+		return pma / FACTOR_PMA + plazas * FACTOR_PLAZAS;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("%s,%s,%d,%d,%s", this.getMarca(), this.getModelo(), this.getPma(), getPlazas(),
+		return String.format("%s %s (%d kg, %d plazas) - %s", this.getMarca(), this.getModelo(), this.getPma(), getPlazas(),
 				this.getMatricula());
 	}
 }

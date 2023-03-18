@@ -13,7 +13,7 @@ import java.time.*;
 
 public class Alquiler {
 	static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-	private final int PRECIO_DIA = 20;
+	private static final int PRECIO_DIA = 20;
 	private LocalDate fechaAlquiler;
 	private LocalDate fechaDevolucion;
 	private Cliente cliente;
@@ -29,7 +29,7 @@ public class Alquiler {
 		if (alquiler == null)
 			throw new NullPointerException("ERROR: No es posible copiar un alquiler nulo.");
 		Cliente clienteTemp = new Cliente(alquiler.getCliente());
-		Turismo vehiculoTemp = new Turismo((Turismo) alquiler.getVehiculo());
+		Vehiculo vehiculoTemp = Vehiculo.copiar(alquiler.getVehiculo());
 		setCliente(clienteTemp);
 		setVehiculo(vehiculoTemp);
 		setFechaAlquiler(alquiler.getFechaAlquiler());
@@ -53,7 +53,7 @@ public class Alquiler {
 
 	private void setVehiculo(Vehiculo vehiculo) {
 		if (vehiculo == null)
-			throw new NullPointerException("ERROR: El turismo no puede ser nulo.");
+			throw new NullPointerException("ERROR: El vehículo no puede ser nulo.");
 		this.vehiculo = vehiculo;
 	}
 
