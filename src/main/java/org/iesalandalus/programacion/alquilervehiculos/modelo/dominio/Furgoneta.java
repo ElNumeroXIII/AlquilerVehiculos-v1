@@ -1,3 +1,4 @@
+//Por joaquin Francisco Sanchez Capel
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 public class Furgoneta extends Vehiculo {
@@ -7,22 +8,15 @@ public class Furgoneta extends Vehiculo {
 	private int plazas;
 
 	public Furgoneta(String marca, String modelo, int pma, int plazas, String matricula) {
-		super(marca,modelo,matricula);
-		if(pma<1000||pma>10000 )
-			throw new IllegalArgumentException("ERROR: El PMA no es correcto.");
+		super(marca, modelo, matricula);
 		setPma(pma);
-		if(plazas<2||plazas>9 )
-			throw new IllegalArgumentException("ERROR: Las plazas no son correctas.");
-		
 		setPlazas(plazas);
 	}
 
 	public Furgoneta(Furgoneta furgoneta) {
 		super(furgoneta);
-		if (furgoneta == null)
-			throw new NullPointerException("ERROR: No es posible copiar un turismo nulo.");
-		setPma(furgoneta.getPma());
-		setPlazas(furgoneta.getPlazas());
+		pma =furgoneta.getPma();
+		plazas = furgoneta.getPlazas();
 	}
 
 	public int getPma() {
@@ -30,6 +24,8 @@ public class Furgoneta extends Vehiculo {
 	}
 
 	private void setPma(int pma) {
+		if (pma < 1000 || pma > 10000)
+			throw new IllegalArgumentException("ERROR: El PMA no es correcto.");
 		this.pma = pma;
 	}
 
@@ -38,6 +34,8 @@ public class Furgoneta extends Vehiculo {
 	}
 
 	private void setPlazas(int plazas) {
+		if (plazas < 2 || plazas > 9)
+			throw new IllegalArgumentException("ERROR: Las plazas no son correctas.");
 		this.plazas = plazas;
 	}
 
@@ -48,7 +46,7 @@ public class Furgoneta extends Vehiculo {
 
 	@Override
 	public String toString() {
-		return String.format("%s %s (%d kg, %d plazas) - %s", this.getMarca(), this.getModelo(), this.getPma(), getPlazas(),
-				this.getMatricula());
+		return String.format("%s %s (%d kg, %d plazas) - %s", this.getMarca(), this.getModelo(), this.getPma(),
+				getPlazas(), this.getMatricula());
 	}
 }

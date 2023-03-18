@@ -5,17 +5,16 @@ package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.Objects;
 
 import javax.naming.OperationNotSupportedException;
-import java.time.*;
 
 public class Alquiler {
 	static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	private static final int PRECIO_DIA = 20;
 	private LocalDate fechaAlquiler;
 	private LocalDate fechaDevolucion;
+	
 	private Cliente cliente;
 	private Vehiculo vehiculo;
 
@@ -28,10 +27,9 @@ public class Alquiler {
 	public Alquiler(Alquiler alquiler) {
 		if (alquiler == null)
 			throw new NullPointerException("ERROR: No es posible copiar un alquiler nulo.");
-		Cliente clienteTemp = new Cliente(alquiler.getCliente());
-		Vehiculo vehiculoTemp = Vehiculo.copiar(alquiler.getVehiculo());
-		setCliente(clienteTemp);
-		setVehiculo(vehiculoTemp);
+		
+		setCliente(new Cliente(alquiler.getCliente()));
+		setVehiculo(Vehiculo.copiar(alquiler.getVehiculo()));
 		setFechaAlquiler(alquiler.getFechaAlquiler());
 		setFechaDevolucion(alquiler.getFechaDevolucion());
 
@@ -115,7 +113,7 @@ public class Alquiler {
 		if (getClass() != obj.getClass())
 			return false;
 		Alquiler other = (Alquiler) obj;
-		return PRECIO_DIA == other.PRECIO_DIA && Objects.equals(cliente, other.cliente)
+		return  Objects.equals(cliente, other.cliente)
 				&& Objects.equals(fechaAlquiler, other.fechaAlquiler)
 				&& Objects.equals(fechaDevolucion, other.fechaDevolucion) && Objects.equals(vehiculo, other.vehiculo);
 	}

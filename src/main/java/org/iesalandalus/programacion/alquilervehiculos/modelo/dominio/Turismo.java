@@ -16,7 +16,7 @@ public class Turismo extends Vehiculo {
 		super(turismo);
 		if (turismo == null)
 			throw new NullPointerException("ERROR: No es posible copiar un turismo nulo.");
-		setCilindrada(turismo.getCilindrada());
+		cilindrada = turismo.getCilindrada();
 	}
 
 	public int getCilindrada() {

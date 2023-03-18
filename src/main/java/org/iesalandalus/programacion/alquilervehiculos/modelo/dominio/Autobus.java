@@ -17,7 +17,7 @@ public class Autobus extends Vehiculo {
 		super(bus);
 		if (bus == null)
 			throw new NullPointerException("ERROR: No es posible copiar un autobus nulo.");
-		setPlazas(bus.getPlazas());
+		plazas = bus.getPlazas();
 	}
 
 	public int getPlazas() {

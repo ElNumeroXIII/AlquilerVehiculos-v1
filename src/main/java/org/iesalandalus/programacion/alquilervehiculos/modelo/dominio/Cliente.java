@@ -71,38 +71,14 @@ public class Cliente {
 	}
 
 	private boolean comprobarLetraDni(String dni) {
-		Integer valorDNI = Integer.parseInt(dni.substring(0, dni.length() - 1));
-		Character dniLetra = dni.charAt(dni.length() - 1);
-		boolean salida = false;
-		ArrayList <Character> letras = new ArrayList<>();
-	        letras.add('T');
-	        letras.add('R');
-	        letras.add('W');
-	        letras.add('A');
-	        letras.add('G');
-	        letras.add('M');
-	        letras.add('Y');
-	        letras.add('F');
-	        letras.add('P');
-	        letras.add('D');
-	        letras.add('X');
-	        letras.add('B');
-	        letras.add('N');
-	        letras.add('J');
-	        letras.add('Z');
-	        letras.add('S');
-	        letras.add('Q');
-	        letras.add('V');
-	        letras.add('H');
-	        letras.add('L');
-	        letras.add('C');
-	        letras.add('K');
-	        letras.add('E');
-	        
-	        for (Character caracter:letras)
-	        	if(Objects.equals(caracter, dniLetra)  && (Character.getNumericValue(caracter)==valorDNI%23))
-	        			salida = true;
-		return salida;
+		 int valorDNI = Integer.parseInt(dni.substring(0, dni.length() - 1));
+	        char dniLetra = dni.charAt(dni.length() - 1);
+	        char[] letras = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
+	        boolean salida = true;
+	        if (dniLetra != letras[valorDNI % 23]) {
+	            salida = false;
+	        }
+	        return salida;
 	}
 
 	public String getTelefono() {

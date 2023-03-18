@@ -1,3 +1,4 @@
+//Por joaquin Francisco Sanchez Capel
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 import java.util.Objects;
@@ -5,7 +6,7 @@ import java.util.regex.Pattern;
 
 public abstract class Vehiculo {
 
-	private static final String ER_MARCA = "[A-Z][a-z]+([',. -]?[A-Z][a-z]+)*|[A-Z]+";
+	private static final String ER_MARCA = "([A-Z][a-z]+([- ]?[A-Z][a-z]+)*)|([A-Z]+)";
 	private static final String ER_MATRICULA = "\\d{4}[BCDFGHJKLMNPRSTVWXYZ]{3}";
 	private String marca;
 	private String modelo;
@@ -19,10 +20,10 @@ public abstract class Vehiculo {
 
 	protected Vehiculo(Vehiculo vehiculo) {
 		if(vehiculo == null)
-			throw new NullPointerException("ERROR: No es posible copiar un vehículo nulo.");
-		setMarca(vehiculo.getMarca());
-		setModelo(vehiculo.getModelo());
-		setMatricula(vehiculo.getMatricula());
+		throw new NullPointerException("ERROR: No es posible copiar un vehículo nulo.");
+		marca = vehiculo.getMarca();
+		modelo = vehiculo.getModelo();
+		matricula = vehiculo.getMatricula();
 		
 	}
 
@@ -34,8 +35,7 @@ public abstract class Vehiculo {
 		else if (vehiculo instanceof Autobus bus)
 			vehiculoCopia = new Autobus(bus);
 		else if (vehiculo instanceof Furgoneta furgo)
-			vehiculoCopia = new Furgoneta(furgo);
-
+			vehiculoCopia = new Furgoneta(furgo);		
 		return vehiculoCopia;
 	}
 
@@ -50,7 +50,6 @@ public abstract class Vehiculo {
 	}
 
 	private void setMarca(String marca) {
-
 		if (marca == null)
 			throw new NullPointerException("ERROR: La marca no puede ser nula.");
 		if (!Pattern.matches(ER_MARCA, marca)) {
@@ -68,7 +67,7 @@ public abstract class Vehiculo {
 			throw new NullPointerException("ERROR: El modelo no puede ser nulo.");
 		}
 
-		if (Pattern.matches("\\s+", modelo) || "".equals(modelo))
+		if (modelo.isBlank())
 			throw new IllegalArgumentException("ERROR: El modelo no puede estar en blanco.");
 
 		this.modelo = modelo;
@@ -90,20 +89,17 @@ public abstract class Vehiculo {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash( matricula);
+		return Objects.hash(matricula);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		boolean salida = false;
-		if (obj instanceof Vehiculo)
-			if (this.getMarca() == ((Vehiculo) obj).getMarca() && this.getMatricula() == ((Vehiculo) obj).getMatricula()
-					&& this.getModelo() == ((Vehiculo) obj).getModelo()
-					&& this.getFactorPrecio() == ((Vehiculo) obj).getFactorPrecio())
-				salida = true;
-			else
-				salida = false;
-		return salida;
+		if (this == obj)
+			return true;
+		if (!(obj instanceof Vehiculo))
+			return false;
+		Vehiculo other = (Vehiculo) obj;
+		return Objects.equals(matricula, other.matricula);
 	}
 
 }
