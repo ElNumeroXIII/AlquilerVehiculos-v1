@@ -1,8 +1,8 @@
 //Por Joaquin Francisco Sanchez Capel
 
-package org.iesalandalus.programacion.alquilervehiculos.vista;
+package org.iesalandalus.programacion.alquilervehiculos.vista.texto;
 
-public enum Opcion {
+public enum Accion {
 	
 	
 	SALIR("Salir"),
@@ -25,7 +25,7 @@ public enum Opcion {
 	
 	 private String texto="";
 	
-	private Opcion(String string) {
+	private Accion(String string) {
 		texto = string;
 	}
 	private static boolean esOrdinalValido(int ordinal) {
@@ -39,7 +39,7 @@ public enum Opcion {
 		
 		return returnal;
 	}
-	public static Opcion get(int ordinal) {
+	public static Accion get(int ordinal) {
 		if(esOrdinalValido(ordinal)) {
 			 return values()[ordinal];	
 		}

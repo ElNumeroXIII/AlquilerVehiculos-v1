@@ -19,10 +19,10 @@ public class Controlador {
 	private Vista vista;
 	private Modelo modelo;
 	
-	public Controlador(Modelo modeloParam, Vista vistaParam) {
+	public Controlador(Modelo modelo, Vista vista) {
 		
-	vista = vistaParam;
-	modelo = modeloParam;
+	this.vista = vista;
+	this.modelo = modelo;
 	
 	}
 	
@@ -38,8 +38,8 @@ public class Controlador {
 		modelo.insertar(new Cliente(cliente));
 	}
 	
-	public void insertar (Turismo turismo) throws OperationNotSupportedException {
-		modelo.insertar(new Turismo(turismo));
+	public void insertar (Vehiculo vehiculo) throws OperationNotSupportedException {
+		modelo.insertar(Vehiculo.copiar(vehiculo));
 	}
 	
 	public void insertar (Alquiler alquiler) throws OperationNotSupportedException {
@@ -50,8 +50,8 @@ public class Controlador {
 		return modelo.buscar(new Cliente(cliente));
 	}
 	
-	public Vehiculo buscar (Turismo turismo) throws OperationNotSupportedException {
-		return modelo.buscar(new Turismo(turismo));
+	public Vehiculo buscar (Vehiculo vehiculo) throws OperationNotSupportedException {
+		return modelo.buscar(Vehiculo.copiar(vehiculo));
 	}
 	
 	public Alquiler buscar (Alquiler alquiler) throws OperationNotSupportedException {
@@ -62,35 +62,38 @@ public class Controlador {
 		modelo.modificar(new Cliente(cliente),nombre , telefono);
 	}
 	
-	public void devolver( Alquiler alquiler, LocalDate fechaDevolucion) throws OperationNotSupportedException {
-		modelo.devolver(new Alquiler(alquiler), fechaDevolucion);
+	public void devolver( Cliente cliente, LocalDate fechaDevolucion) throws OperationNotSupportedException {
+		modelo.devolver(new Cliente(cliente), fechaDevolucion);
+	}
+	public void devolver( Vehiculo vehiculo, LocalDate fechaDevolucion) throws OperationNotSupportedException {
+		modelo.devolver(Vehiculo.copiar(vehiculo), fechaDevolucion);
 	}
 	
 	public void borrar(Cliente cliente) throws OperationNotSupportedException {
 		modelo.borrar(new Cliente(cliente));
 	}
-	public void borrar(Turismo turismo) throws OperationNotSupportedException {
-		modelo.borrar(new Turismo(turismo));
+	public void borrar(Vehiculo vehiculo) throws OperationNotSupportedException {
+		modelo.borrar(Vehiculo.copiar(vehiculo));
 	}
 	public void borrar(Alquiler alquiler) throws OperationNotSupportedException {
 		modelo.borrar(new Alquiler(alquiler));
 	}
 	
 	public List<Cliente> getClientes(){
-	return	modelo.getClientes();
+	return	modelo.getListaClientes();
 	}
-	public List<Turismo> getTurismos(){
-	return	modelo.getTurismos();
+	public List<Vehiculo> getVehiculos(){
+	return	modelo.getListaVehiculos();
 	}	
 	public List<Alquiler> getAlquileres(){
-	return	modelo.getAlquileres();
+	return	modelo.getListaAlquileres();
 	}
 	
 	public List<Alquiler> getAlquileres(Cliente cliente){
-		return	modelo.getAlquileres(new Cliente(cliente));
+		return	modelo.getListaAlquileres(cliente);
 		}
-	public List<Alquiler> getAlquileres(Turismo turismo){
-		return	modelo.getAlquileres(new Turismo(turismo));
+	public List<Alquiler> getAlquileres(Vehiculo vehiculo){
+		return	modelo.getListaAlquileres(Vehiculo.copiar(vehiculo));
 		}
 	
 }

@@ -1,6 +1,6 @@
 //Joaquin Francisco Sanchez Capel
 
-package org.iesalandalus.programacion.alquilervehiculos.vista;
+package org.iesalandalus.programacion.alquilervehiculos.vista.texto;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -33,7 +33,7 @@ public class Consola {
 	public static void mostrarMenu() {
 		mostrarCabecera("Menu de manejo del sistema de alquiler");
 		System.out.printf("Opciones:");
-		for(Opcion opcion: Opcion.values()) {
+		for(Accion opcion: Accion.values()) {
 			System.out.printf("%s%n",opcion.toString());
 		}
 	}
@@ -58,8 +58,8 @@ public class Consola {
         return fecha;
 	}
 
-	public static Opcion elegirOpcion() {
-		return Opcion.values()[leerEntero("Elige opcion")];
+	public static Accion elegirOpcion() {
+		return Accion.values()[leerEntero("Elige opcion")];
 	}
 
 	public static Cliente leerCliente() {

@@ -28,10 +28,10 @@ public class Alquiler {
 		if (alquiler == null)
 			throw new NullPointerException("ERROR: No es posible copiar un alquiler nulo.");
 		
-		setCliente(new Cliente(alquiler.getCliente()));
-		setVehiculo(Vehiculo.copiar(alquiler.getVehiculo()));
-		setFechaAlquiler(alquiler.getFechaAlquiler());
-		setFechaDevolucion(alquiler.getFechaDevolucion());
+		cliente = new Cliente(alquiler.getCliente());
+		vehiculo = Vehiculo.copiar(alquiler.getVehiculo());
+		fechaAlquiler = alquiler.getFechaAlquiler();
+		fechaDevolucion=alquiler.getFechaDevolucion();
 
 	}
 
@@ -73,14 +73,20 @@ public class Alquiler {
 	}
 
 	private void setFechaDevolucion(LocalDate fechaDevolucion) {
-		if (fechaDevolucion == null)
+		if (fechaDevolucion == null) {
 			throw new NullPointerException("ERROR: La fecha de devolución no puede ser nula.");
-		if (fechaDevolucion.isBefore(fechaAlquiler) || fechaDevolucion.isEqual(fechaAlquiler))
+		}
+		if (fechaDevolucion.isAfter(LocalDate.now())) {
+			throw new IllegalArgumentException("ERROR: La fecha de devolución no puede ser futura.");
+		}
+		if (fechaDevolucion.isBefore(getFechaAlquiler())) {
 			throw new IllegalArgumentException(
 					"ERROR: La fecha de devolución debe ser posterior a la fecha de alquiler.");
-		if (fechaDevolucion.isAfter(LocalDate.now()))
-			throw new IllegalArgumentException("ERROR: La fecha de devolución no puede ser futura.");
-
+		}
+		if (fechaDevolucion.isEqual(getFechaAlquiler())) {
+			throw new IllegalArgumentException(
+					"ERROR: La fecha de devolución debe ser posterior a la fecha de alquiler.");
+		}
 		this.fechaDevolucion = fechaDevolucion;
 	}
 
