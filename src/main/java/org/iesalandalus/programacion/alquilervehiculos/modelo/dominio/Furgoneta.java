@@ -2,8 +2,8 @@
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
 public class Furgoneta extends Vehiculo {
-	private final int FACTOR_PMA = 100;
-	private final int FACTOR_PLAZAS = 1;
+	private static final int FACTOR_PMA = 100;
+	private static final int FACTOR_PLAZAS = 1;
 	private int pma;
 	private int plazas;
 

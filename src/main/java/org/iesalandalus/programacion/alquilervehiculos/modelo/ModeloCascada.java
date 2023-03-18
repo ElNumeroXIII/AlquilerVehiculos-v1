@@ -96,7 +96,7 @@ public class ModeloCascada extends Modelo {
 	public void borrar(Vehiculo vehiculo) throws OperationNotSupportedException {
 		for(Alquiler alquiler:getAlquileres().get(vehiculo))
 			getAlquileres().borrar(alquiler);
-		getVehiculos().borrar(vehiculo);;
+		getVehiculos().borrar(vehiculo);
 	}
 
 	@Override

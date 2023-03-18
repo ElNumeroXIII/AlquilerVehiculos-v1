@@ -19,8 +19,9 @@ public abstract class Vehiculo {
 	}
 
 	protected Vehiculo(Vehiculo vehiculo) {
-		if(vehiculo == null)
+		if(vehiculo == null) {
 		throw new NullPointerException("ERROR: No es posible copiar un vehículo nulo.");
+		}
 		marca = vehiculo.getMarca();
 		modelo = vehiculo.getModelo();
 		matricula = vehiculo.getMatricula();

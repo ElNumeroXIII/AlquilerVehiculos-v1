@@ -2,7 +2,6 @@
 
 package org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.memoria;
 
-import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.negocio.IVehiculos;
 

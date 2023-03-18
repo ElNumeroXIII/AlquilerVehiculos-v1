@@ -8,7 +8,6 @@ public enum FactoriaVista {
 
 		@Override
 		public Vista crear() {
-			// TODO Auto-generated method stub
 			return new VistaTexto();
 		}
 	};

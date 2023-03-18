@@ -2,7 +2,6 @@
 // Por Joaquin Francisco Sánchez Capel
 package org.iesalandalus.programacion.alquilervehiculos.modelo.dominio;
 
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.regex.Pattern;
 

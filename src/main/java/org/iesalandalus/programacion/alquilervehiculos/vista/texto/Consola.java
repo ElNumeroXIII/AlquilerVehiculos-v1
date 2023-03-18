@@ -6,36 +6,46 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Alquiler;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Autobus;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Cliente;
+import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Furgoneta;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Turismo;
 import org.iesalandalus.programacion.alquilervehiculos.modelo.dominio.Vehiculo;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 public class Consola {
 
-	private static String PATRON_FECHA = "dd/MM/yyyy";
-	private static DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern(PATRON_FECHA);
+	private static final String PATRON_FECHA = "dd/MM/yyyy";
+	private static final String PATRON_MES="MM/yyyy";
+	private static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern(PATRON_FECHA);
 
-	private Consola() {
-
-	}
+	private Consola() {}
 
 	public static void mostrarCabecera(String mensaje) {
-		System.out.printf("%s", mensaje);
-		StringBuilder otroString = new StringBuilder();
-		for (int i = 0; i < mensaje.length() - 1; i++) {
-			otroString.append("-");
+		System.out.printf("%n%s%n", mensaje);
+		StringBuilder underline = new StringBuilder();
+		for (int i = 0; i < mensaje.length(); i++) {
+			underline.append("-");
 		}
-		System.out.printf("%s", otroString);
+		System.out.printf("%n%s%n", underline);
 
 	}
 
 	public static void mostrarMenu() {
-		mostrarCabecera("Menu de manejo del sistema de alquiler");
-		System.out.printf("Opciones:");
-		for(Accion opcion: Accion.values()) {
-			System.out.printf("%s%n",opcion.toString());
+		for (Accion accion : Accion.values()) {
+			if (accion.ordinal() != 0) {
+				System.out.printf("%s%n", accion);
+			}
 		}
+		System.out.println(Accion.SALIR);
+	}
+	
+	public static Accion elegirAcccion() {
+		Accion opcionElegida = null;
+		do {
+			opcionElegida = Accion.get(leerEntero("Has elegido: "));
+		}while(opcionElegida==null);
+		return opcionElegida;
 	}
 
 	private static String leerCadena(String mensaje) {
@@ -48,28 +58,28 @@ public class Consola {
 		return Entrada.entero();
 	}
 
-	private static LocalDate leerFecha(String mensaje) {
-		System.out.printf("%s", mensaje);
+	private static LocalDate leerFecha(String mensaje, String patron) {
+		System.out.printf("Fecha y patrón: %s (%s)", mensaje, patron);
         LocalDate fecha = null;
         
-        if(LocalDate.parse(Entrada.cadena(), FORMATO_FECHA)==null)
+        if (patron.equals(PATRON_FECHA)) {
+			fecha = LocalDate.parse(Entrada.cadena(), FORMATO_FECHA);}
+        
+		else if(patron.equals(PATRON_MES)) {
+			fecha = LocalDate.parse("01/" + Entrada.cadena(),FORMATO_FECHA);}
+		
+        if(fecha==null)
         	throw new IllegalArgumentException();
 
         return fecha;
 	}
 
-	public static Accion elegirOpcion() {
-		return Accion.values()[leerEntero("Elige opcion")];
-	}
-
 	public static Cliente leerCliente() {
-			Cliente clienteDevolver = new Cliente(leerCadena("Nombre del cliente"),leerCadena("DNI del cliente"), leerCadena("telefono del cliente"));
-		return clienteDevolver;	
+			return new Cliente(leerNombre(),leerCadena("Con DNI:"), leerTelefono());	
 	}
 
 	public static Cliente leerClienteDni() {
-		Cliente clienteDevolver = new Cliente(Cliente.getClienteConDni(leerCadena("DNI de cliente")));
-		return clienteDevolver;
+		return Cliente.getClienteConDni(leerCadena("Con DNI:"));
 	}
 
 	public static String leerNombre() {
@@ -80,22 +90,59 @@ public class Consola {
 		return	leerCadena("Dame el numero");
 	}
 
-	public static Turismo leerTurismo() {
-		Turismo turismo = new Turismo(leerCadena("Marca"),leerCadena("Modelo"),leerEntero("Cilindrada"), leerCadena("Matricula"));
-		return turismo;
+	public static Vehiculo leerVehiculo() {
+		mostrarMenuTiposVehiculos();
+		return leerVehiculo(elegirTipoVehiculo());
+		
+	}
+	
+	private static void mostrarMenuTiposVehiculos() {
+		Consola.mostrarCabecera("Tipos:");
+		for(TipoVehiculo tipo:TipoVehiculo.values())
+			System.out.printf("%s%n",tipo);
 	}
 
-	public static Vehiculo leerTurismomatricula() {
-		Vehiculo turismo = new Turismo(Turismo.getTurismoConMatricula(leerCadena("matricula")));
-		return turismo;
+	private static TipoVehiculo elegirTipoVehiculo() {
+		return TipoVehiculo.get(leerEntero("Tipo:") - 1);
+		
+	}
+
+
+	public static Vehiculo leerVehiculo(TipoVehiculo tipoVehiculo) {
+		Vehiculo vehiculoSalida = null;
+		String marca = leerCadena("De la marca:");
+		String modelo = leerCadena("Del modelo:");
+		String matricula = leerCadena("Y con matrícula:");
+		
+		if(tipoVehiculo == TipoVehiculo.TURISMO) {
+			vehiculoSalida = new Turismo(marca, modelo, leerEntero("Turismo con cilindrada:"), matricula);
+		}
+		if(tipoVehiculo == TipoVehiculo.FURGONETA) {
+			vehiculoSalida = new Furgoneta(marca, modelo, leerEntero("Con Peso Máximo Autorizado:"), leerEntero("Con número de plazas:"), matricula);
+		}
+		
+		if(tipoVehiculo == TipoVehiculo.AUTOBUS) {
+			vehiculoSalida = new Autobus(marca, modelo, leerEntero("Con número de plazas:"), matricula);
+		}
+		
+		return vehiculoSalida;
+	}
+	
+	public static Vehiculo leerVehiculoMatricula(){
+		return  Vehiculo.getVehiculoConMatricula(leerCadena("Vehiculo con matrícula:"));
 	}
 
 	public static Alquiler leerAlquiler() {
-		Alquiler alquiler = new Alquiler(leerCliente(),leerTurismo(),leerFecha("Fecha Alquiler"));
-		return alquiler;
+		return new Alquiler(leerCliente(),leerVehiculo(),leerFecha("Fecha Alquiler:",PATRON_FECHA));
+		
 	}
 
 	public static LocalDate leerFechaDevolucion() {
-		return leerFecha("Fecha Devolucion");
+		return leerFecha("Fecha Devolucion",PATRON_FECHA);
+	}
+	
+	public static LocalDate leerMes() {
+		return leerFecha("Fecha mes:", PATRON_MES);
+		
 	}
 }
